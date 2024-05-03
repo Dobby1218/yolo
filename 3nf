@@ -1,0 +1,77 @@
+To create tables in Third Normal Form (3NF), you need to ensure that each table satisfies the following conditions:
+
+1. *Atomic Values:* Each column should store atomic (indivisible) values. Avoid storing multiple values in a single column.
+
+2. *No Transitive Dependencies:* Avoid columns that are dependent on non-key attributes.
+
+3. *Separate Tables for Related Data:* Store related data in separate tables to eliminate redundancy and improve data integrity.
+
+Here's a step-by-step guide to creating tables in 3NF:
+
+1. *Identify Entities:* Identify the main entities in your database system. Each entity will typically correspond to a table.
+
+2. *Identify Attributes:* For each entity, identify the attributes (properties) that describe it. These attributes will become columns in the corresponding table.
+
+3. *Identify Relationships:* Determine the relationships between entities. This will help define the foreign keys in your tables.
+
+4. *Create Tables:* Based on the identified entities, attributes, and relationships, create tables for each entity. Each table should have a primary key to uniquely identify each row.
+
+5. *Normalize Tables:* Ensure that each table is in at least Third Normal Form by eliminating any transitive dependencies and storing related data in separate tables.
+
+6. *Define Constraints:* Define any constraints such as primary keys, foreign keys, and other integrity constraints to maintain data consistency.
+
+7. *Optimize Performance:* Optionally, consider indexing columns frequently used in queries to improve performance.
+
+Here's an example of creating tables in 3NF for a simple library management system:
+
+sql
+-- Authors table
+CREATE TABLE Authors (
+    author_id INT PRIMARY KEY,
+    author_name VARCHAR(100)
+);
+
+-- Publishers table
+CREATE TABLE Publishers (
+    publisher_id INT PRIMARY KEY,
+    publisher_name VARCHAR(100),
+    location VARCHAR(100)
+);
+
+-- Books table
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(255),
+    author_id INT,
+    publisher_id INT,
+    publication_year INT,
+    ISBN VARCHAR(20),
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id),
+    FOREIGN KEY (publisher_id) REFERENCES Publishers(publisher_id)
+);
+
+-- Members table
+CREATE TABLE Members (
+    member_id INT PRIMARY KEY,
+    member_name VARCHAR(100),
+    address VARCHAR(255),
+    phone_number VARCHAR(20)
+);
+
+-- Borrowings table
+CREATE TABLE Borrowings (
+    borrowing_id INT PRIMARY KEY,
+    member_id INT,
+    book_id INT,
+    borrow_date DATE,
+    return_date DATE,
+    FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+
+In this example:
+
+- Each table represents a separate entity (Authors, Publishers, Books, Members, Borrowings).
+- Each table has its own primary key to uniquely identify rows.
+- Foreign keys are used to establish relationships between tables (e.g., author_id and publisher_id in the Books table).
