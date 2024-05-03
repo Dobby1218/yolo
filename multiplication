@@ -1,0 +1,15 @@
+create or replace function multiply(n1 in number, n2 in number)
+return number 
+is 
+n3 number(7);
+begin 
+n3:=n1*n2;
+return n3;
+end;
+/
+declare
+n3 number(6);
+begin
+n3:=multiply(5,87);
+dbms_output.put_line('Multiplication is: ' || n3);
+end;
